@@ -9,12 +9,19 @@ const router = require('./router');  // Assuming this is a separate file handlin
 const app = express();
 const server = http.createServer(app);
 
-// Configure Socket.io with CORS settings
+// Configure CORS for HTTP requests (optional if needed for API)
+app.use(cors({
+  origin: ['https://chatting-app4u.netlify.app', 'http://localhost:5173'],
+  methods: ['GET', 'POST'],
+  credentials: true
+}));
+
+// Configure Socket.io with CORS settings for WebSocket connections
 const io = socketio(server, {
   cors: {
-    origin: "http://localhost:5173",  // Client's origin; modify if different
+    origin: ['https://chatting-app4u.netlify.app', 'http://localhost:5173'],
     methods: ["GET", "POST"],
-    allowedHeaders: ["my-custom-header"],  // Optional: Use headers if required
+    allowedHeaders: ["my-custom-header"], // Optional: Use headers if needed
     credentials: true
   }
 });
